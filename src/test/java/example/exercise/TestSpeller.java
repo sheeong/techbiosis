@@ -3,7 +3,7 @@ package example.exercise;
 import org.junit.Test;
 
 public class TestSpeller {
-	private Speller spell = new Speller();
+	private NumberSpeller spell = new NumberSpeller();
 	
 	//@Test
 	public void test2WordsNumber() {

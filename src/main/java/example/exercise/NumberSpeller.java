@@ -1,7 +1,7 @@
 package example.exercise;
 
-public class Speller {
-	public Speller() {}
+public class NumberSpeller {
+	public NumberSpeller() {}
 	
 	public void spellIt(int num) {
 		System.out.println(num);
