@@ -1,33 +1,28 @@
 package example.exercise;
 
+import java.text.DecimalFormat;
+
 public class NumberSpeller {
+	private DecimalFormat formatter = new DecimalFormat("###,###,###");
 	public NumberSpeller() {}
 	
 	public void spellIt(int num) {
-		System.out.println(num);
-		int result = num / 1000000000;
-		if (result != 0) {
-			spellNumber(result);
-			print(" billion ");
-			num -= result * 1000000000;
-		}
-		result = num / 1000000;
-		if (result != 0) {
-			//System.out.println(result);
-			spellHundreds(result);
-			print(" million ");
-			num -= result * 1000000;
-		}
-		result = num / 1000;
-		if (result != 0) {
-			//System.out.println("\n"+result);
-			spellHundreds(result);
-			print(" thousand ");
-			num -= result * 1000;
-			//System.out.println("\n" + num);
-		}
+		System.out.printf(formatter.format(num) + ": ");
+		num = spellGroup(num, 1000_000_000, " billion ");
+		num = spellGroup(num, 1000_000, " million ");
+		num = spellGroup(num, 1000, " thousand ");
 		spellHundreds(num);
-		
+		System.out.println();
+	}
+	
+	private int spellGroup(int value, int group, String sgroup) {
+		int result = value / group;
+		if (result != 0) {
+			spellHundreds(result);
+			print(sgroup);
+			value -= result * group;
+		}
+		return value;
 	}
 	
 	protected void print(String s) {
@@ -37,12 +32,12 @@ public class NumberSpeller {
 	void spellHundreds(int num) {
 		int result = num / 100;
 		if (result != 0) {
-			spellNumber(result);
+			spellUnits(result);
 			print(" hundred ");
 			num -= result * 100;
 		}
 		spellNumberWords(num);
-		spellNumber(num);
+		spellUnits(num);
 	}
 	
 	void spellNumberWords(int num) {
@@ -56,7 +51,7 @@ public class NumberSpeller {
 		spellTens(num / 10);
 		if (num % 10 != 0) { 
 			print("-"); 
-			spellNumber(num % 10);
+			spellUnits(num % 10);
 		}
 		
 	}
@@ -64,7 +59,6 @@ public class NumberSpeller {
 	void spellTeens(int num) {
 		if (num > 9 && num < 20) { 
 		switch (num) {
-		//case 0: print("zero"); break;
 		case 10: print("ten"); break;
 		case 11: print("eleven"); break;
 		case 12: print("twelve"); break;
@@ -75,15 +69,13 @@ public class NumberSpeller {
 		case 17: print("seventeen"); break;
 		case 18: print("eighteen"); break;
 		case 19: print("nineteen"); break;
-		default: print("*"+num+"*"); break;
 		}
 		}
 	}
 
-	void spellNumber(int num) {
+	void spellUnits(int num) {
 		if (num > 9 || num == 0) { return; }
 		switch (num) {
-		//case 0: print("zero"); break;
 		case 1: print("one"); break;
 		case 2: print("two"); break;
 		case 3: print("three"); break;
@@ -93,14 +85,13 @@ public class NumberSpeller {
 		case 7: print("seven"); break;
 		case 8: print("eight"); break;
 		case 9: print("nine"); break;
-		default: print("*"+num+"*"); break;
 		}
 		
 	}
 
 	void spellTens(int num) {
 		switch (num) {
-		//case 0: print("zero"); break;
+		case 0: print("zero"); break;
 		case 1: print("one"); break;
 		case 2: print("twenty"); break;
 		case 3: print("thirty"); break;
